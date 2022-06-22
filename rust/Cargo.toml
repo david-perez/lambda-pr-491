@@ -15,8 +15,9 @@ opt-level = 'z' # Optimization for size (or 's' for a less aggressive alternativ
 lto = true # Link-time optimization using using whole-program analysis.
 
 [dependencies]
-lambda_http = "0.5"
-lambda_runtime = "0.5"
+axum = "0.5"
+lambda_http = { path = "/tmp/aws-lambda-rust-runtime/lambda-http" }
+lambda_runtime = { path = "/tmp/aws-lambda-rust-runtime/lambda-runtime" }
 tokio = "1.19"
 serde = "1.0"
 serde_derive = "1.0"

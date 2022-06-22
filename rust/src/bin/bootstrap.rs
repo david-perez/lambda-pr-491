@@ -1,9 +1,10 @@
-use lambda_runtime::{service_fn, Error};
+use axum::{routing::get, Json, Router};
+use lambda_runtime::Error;
 use serde_json::{json, Value};
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let lambda_handler = service_fn(func);
+    let lambda_handler = Router::new().route("/hello", get(hello));
 
     lambda_http::run(lambda_handler)
         .await
@@ -12,6 +13,6 @@ async fn main() -> Result<(), Error> {
     Ok(())
 }
 
-async fn func(_request: lambda_http::Request) -> Result<Value, lambda_http::Error> {
-    Ok(json!({ "message": "hello stranger!"}))
+async fn hello() -> Json<Value> {
+    Json(json!({ "message": "hello stranger!"}))
 }
