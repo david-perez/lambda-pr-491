@@ -1,5 +1,7 @@
 import { Construct } from "constructs";
 import { Stack, aws_lambda, Duration } from "aws-cdk-lib";
+import { HttpLambdaIntegration } from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
+import * as apigwv2 from "@aws-cdk/aws-apigatewayv2-alpha";
 
 export class LambdaStack extends Stack {
     constructor(scope: Construct, id: string) {
@@ -7,7 +9,7 @@ export class LambdaStack extends Stack {
 
         const bootstrapLocation = `${__dirname}/../../rust/target/cdk/release`;
         const entryId = "main";
-        new aws_lambda.Function(this, entryId, {
+        const lambda = new aws_lambda.Function(this, entryId, {
             functionName: `${id}-${entryId}`,
             runtime: aws_lambda.Runtime.PROVIDED_AL2,
             // This value has no effect since we're bringing with us a custom
@@ -18,6 +20,16 @@ export class LambdaStack extends Stack {
             code: aws_lambda.Code.fromAsset(bootstrapLocation),
             memorySize: 128,
             timeout: Duration.seconds(5),
+        });
+
+        const httpApi = new apigwv2.HttpApi(this, "HttpApi");
+        httpApi.addRoutes({
+            path: "/hello",
+            methods: [apigwv2.HttpMethod.GET],
+            integration: new HttpLambdaIntegration(
+                "HttpLambdaIntegration",
+                lambda
+            ),
         });
     }
 }

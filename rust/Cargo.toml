@@ -15,6 +15,7 @@ opt-level = 'z' # Optimization for size (or 's' for a less aggressive alternativ
 lto = true # Link-time optimization using using whole-program analysis.
 
 [dependencies]
+lambda_http = "0.5"
 lambda_runtime = "0.5"
 tokio = "1.19"
 serde = "1.0"
