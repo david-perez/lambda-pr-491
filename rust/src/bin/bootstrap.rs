@@ -4,7 +4,7 @@ use serde_json::{json, Value};
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let lambda_handler = Router::new().route("/hello", get(hello));
+    let lambda_handler = Router::new().route("/prod/hello", get(hello));
 
     lambda_http::run(lambda_handler)
         .await

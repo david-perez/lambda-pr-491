@@ -2,6 +2,7 @@ import { Construct } from "constructs";
 import { Stack, aws_lambda, Duration } from "aws-cdk-lib";
 import { HttpLambdaIntegration } from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 import * as apigwv2 from "@aws-cdk/aws-apigatewayv2-alpha";
+import * as aws_apigateway from "aws-cdk-lib/aws-apigateway";
 
 export class LambdaStack extends Stack {
     constructor(scope: Construct, id: string) {
@@ -22,9 +23,14 @@ export class LambdaStack extends Stack {
             timeout: Duration.seconds(5),
         });
 
+        new aws_apigateway.LambdaRestApi(this, 'RestApi', {
+            handler: lambda,
+            proxy: true
+        });
+
         const httpApi = new apigwv2.HttpApi(this, "HttpApi");
         httpApi.addRoutes({
-            path: "/hello",
+            path: "/prod/hello",
             methods: [apigwv2.HttpMethod.GET],
             integration: new HttpLambdaIntegration(
                 "HttpLambdaIntegration",
