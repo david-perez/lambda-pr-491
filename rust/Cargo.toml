@@ -1,0 +1,25 @@
+[package]
+name = "lambda"
+version = "0.1.0"
+authors = ["david-perez <d@vidp.dev>"]
+edition = "2021"
+
+[[bin]]
+name = "bootstrap"
+path = "src/bin/bootstrap.rs"
+
+[profile.release]
+panic = 'abort' # Less code to include into binary.
+codegen-units = 1 # Optimization over all codebase (better optimization, slower build).
+opt-level = 'z' # Optimization for size (or 's' for a less aggressive alternative).
+lto = true # Link-time optimization using using whole-program analysis.
+
+[dependencies]
+lambda_runtime = "0.5"
+tokio = "1.19"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+
+[dev-dependencies]
+pretty_assertions = "1.0"
