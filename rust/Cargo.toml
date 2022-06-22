@@ -16,6 +16,12 @@ lto = true # Link-time optimization using using whole-program analysis.
 
 [dependencies]
 axum = "0.5"
+# Note that I'm specifying a path depedency as opposed to directly pointing to
+# https://github.com/hugobast/aws-lambda-rust-runtime because of
+# https://github.com/awslabs/aws-lambda-rust-runtime/issues/492
+# But this directory contains the same tree as
+# https://github.com/hugobast/aws-lambda-rust-runtime at commit
+# `9e053ef1d4ae892fc9ce314e1fbef74e6b2fcb47`.
 lambda_http = { path = "/tmp/aws-lambda-rust-runtime/lambda-http" }
 lambda_runtime = { path = "/tmp/aws-lambda-rust-runtime/lambda-runtime" }
 tokio = "1.19"
