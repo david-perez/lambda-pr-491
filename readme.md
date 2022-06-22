@@ -44,20 +44,6 @@ To deploy the Lambda function stack, run this command:
 cdk deploy --all
 ```
 
-Invoke
-------
-
-To invoke the function using the AWS CLI and place its output in `output.json`:
-
-```sh
-aws lambda invoke \
-  --function-name Lambda-main \
-  # If you're using the AWS CLI v1, remove this argument.
-  --cli-binary-format raw-in-base64-out \
-  --payload '{"firstName": "David"}' \
-  output.json
-```
-
 Destroy
 -------
 
